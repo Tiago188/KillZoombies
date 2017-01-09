@@ -144,7 +144,7 @@ this.kz = this.kz || {};
                             that.move(event.delta, true);
                         }
         			}
-                } else  if (that.status !== 'death') {
+                } else if (that.status !== 'death') {
                     armature.animation.gotoAndPlay('death');
                     //createjs.Sound.play("death", {interrupt: createjs.Sound.INTERRUPT_ANY});
                     that.status = 'death';
