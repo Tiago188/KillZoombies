@@ -194,10 +194,45 @@ this.kz = this.kz || {};
         kz.addHUD();
     };
 
+    // Game Win ================================================================
+    kz.scn_game_win = function () {
+        kz.scenes.game_win = new kz.Scene({
+            background: ['bg_win'],
+            buttons: [
+                {
+                    image: 'btn_menu',
+                    type: 'mousedown',
+                    func: kz.scn_main,
+                    posX: 40,
+                    posY: 75
+                }
+            ],
+            removeScenes: [
+                kz.scenes.game,
+                kz.scenes.mnu_level_complete
+            ]
+        });
+    };
+
     // Game Over ===============================================================
-    function scn_over() {
-    	console.log("OVER");
-    }
+    kz.scn_game_over = function () {
+        kz.scenes.game_over = new kz.Scene({
+            background: ['bg_over'],
+            buttons: [
+                {
+                    image: 'btn_menu',
+                    type: 'mousedown',
+                    func: kz.scn_main,
+                    posX: 40,
+                    posY: 75
+                }
+            ],
+            removeScenes: [
+                kz.scenes.game,
+                kz.scenes.mnu_level_complete
+            ]
+        });
+    };
 
     // Pop-up menus ============================================================
     kz.mnu_pause = function () {
@@ -244,8 +279,12 @@ this.kz = this.kz || {};
     // Pop-up level complete ===================================================
     kz.mnu_level_complete = function () {
         console.log("LEVEL COMPLETE MENU");
-        createjs.Ticker.paused = false;
+        createjs.Ticker.paused = true;
         kz.config.level_current++;
+        
+        if (kz.config.level_current> 2) {
+            kz.scn_game_win();
+        }
 
         kz.scenes.mnu_level_complete = new kz.Scene({
             background: ['bg_pause_menu', 20, 15],
@@ -356,7 +395,7 @@ this.kz = this.kz || {};
                         {
                             type: 'mousedown',
                             func: function () {
-                        		if ( kz.player.display.life > 0 && !createjs.Ticker.paused ) {
+                        		if ( kz.player.display.life > 0 && kz.player.display.visible && !createjs.Ticker.paused ) {
                         			kz.player.display.direction = -1;
                         			kz.player.display.scaleX = -kz.player.scale;
                                     kz.player.display.mobile = true;
@@ -388,7 +427,7 @@ this.kz = this.kz || {};
                         {
                             type: 'mousedown',
                             func: function () {
-                        		if ( kz.player.display.life > 0 && !createjs.Ticker.paused ) {
+                        		if ( kz.player.display.life > 0 && kz.player.display.visible && !createjs.Ticker.paused ) {
                         			kz.player.display.direction = 1;
                         			kz.player.display.scaleX = kz.player.scale;
                                     kz.player.display.mobile = true;
