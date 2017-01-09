@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+<head data-noxhrfix>
+    <title>Kill ZOombies!!!</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style>
+        /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+        /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+        @-ms-viewport { width: 100vw; zoom: 100%; }  @viewport { width: 100vw; zoom: 100%; }
+        @-ms-viewport { user-zoom: fixed; }           @viewport { user-zoom: fixed; }
+        * { margin:0; padding:0; } /* to remove the top and left whitespace */
+        html, body { width:100%; height:100%; } /* just to be sure these are full screen*/
+        canvas { display:block; } /* To remove the scrollbars */
+    </style>
+
+    <!-- phantom library, needed for Cordova api calls, added during build -->
+    <!-- <script src="plugins/cordova-plugin-file/www/DirectoryEntry.js"></script> -->
+    <!-- <script src="cordova_plugins.js"></script> -->
+    <!-- Libs -->
+    <!-- <script src="js/third/cordova.js"></script> -->
+    <!--
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
+    </script>
+    -->
+    <script src="js/third/createjs/createjs-2015.11.26.min.js"></script>
+    <script src="js/third/cordovaaudioplugin-0.6.2.min.js"></script>
+    <script src="js/third/dragonbones-createjs.js"></script>
+    <script src="js/kz/load.js"></script>
+    <script src="js/kz/Scene.js"></script>
+    <script src="js/kz/HUD.js"></script>
+    <script src="js/kz/Player.js"></script>
+    <script src="js/kz/Zoombie.js"></script>
+    <script src="js/kz/Background.js"></script>
+    <script src="js/kz/Element.js"></script>
+    <script src="js/kz/House.js"></script>
+    <script src="js/kz/Layer.js"></script>
+    <script src="js/kz/Collider.js"></script>
+    <script src="js/kz/Utils.js"></script>
+    <script src="js/scenes.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
+    <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
+</head>
+
+<!-- <body onload="init();"> -->
+<body>
+
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+</body>
+</html>

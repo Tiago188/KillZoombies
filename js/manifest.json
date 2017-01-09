@@ -1,0 +1,43 @@
+{
+	"manifest": [
+		{"src":"assets/bg_main.jpg", "id":"bg_main_menu"},
+		{"src":"assets/bg_pause.jpg", "id":"bg_pause_menu"},
+		{"src":"assets/btn_play.jpg", "id":"btn_play"},
+		{"src":"assets/btn_options.jpg", "id":"btn_options"},
+		{"src":"assets/btn_credits.jpg", "id":"btn_credits"},
+		{"src":"assets/btn_back.jpg", "id":"btn_back"},
+		{"src":"assets/btn_menu.jpg", "id":"btn_menu"},
+		{"src":"assets/btn_continue.jpg", "id":"btn_continue"},
+		{"src":"assets/bg_options.jpg", "id":"bg_options_menu"},
+		{"src":"assets/bg_credits.jpg", "id":"bg_credits_menu"},
+		{"src":"assets/btn_menu.jpg", "id":"bg_characteres_menu"},
+		{"src":"assets/btn_pause.png", "id":"btn_pause"},
+		{"src":"assets/btn_move.png", "id":"btn_move"},
+		{"src":"assets/btn_shoot.png", "id":"btn_shoot"},
+
+		{"src":"assets/player/player_tex.png", "id":"player_tex"},
+		{"src":"assets/player/player_tex.json", "id":"player_tex_data"},
+		{"src":"assets/player/player_ske.json", "id":"player_ske_data"},
+
+		{"src":"assets/zoombie/zoombie_tex.png", "id":"zoombie_tex"},
+		{"src":"assets/zoombie/zoombie_tex.json", "id":"zoombie_tex_data"},
+		{"src":"assets/zoombie/zoombie_ske.json", "id":"zoombie_ske_data"},
+
+		{"src":"assets/player.png", "id":"character_player"},
+		{"src":"assets/spider.png", "id":"character_spider"},
+
+		{"src":"assets/house1.png", "id":"house1"},
+		{"src":"assets/house1.png", "id":"house2"},
+		{"src":"assets/bg_ground.png", "id":"bg_ground"},
+		{"src":"assets/bg_street.png", "id":"bg_street"},
+		{"src":"assets/bg_trees.png", "id":"bg_trees"},
+		{"src":"assets/bg_city_front.png", "id":"bg_city_front"},
+		{"src":"assets/bg_city_middle.png", "id":"bg_city_middle"},
+		{"src":"assets/bg_city_back.png", "id":"bg_city_back"},
+		{"src":"assets/bg_sun.png", "id":"bg_sun"},
+
+		{"src":"assets/audio/enter-menu.mp3", "id":"main_sound"},
+		{"src":"assets/audio/jenison.mp3", "id":"level_sound"},
+		{"src":"assets/audio/shotgun.mp3", "id":"player_shotgun"}
+	]
+}

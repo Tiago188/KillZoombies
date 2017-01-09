@@ -1,0 +1,86 @@
+{
+    "distance": 2000,
+    "speed": 0.12,
+    "zoombies": 10,
+    "zoombie_types": ["zoombie", "zoombardz", "zoomber", "zoombeed"],
+    //characters: ["spider", "santaclaus", "supermann", "1bertus", "mara", "kai", "sograun"],
+    "characters": ["player", "spider"],
+    "weapons": {
+        "shotgun": {
+            "damage": 20,
+            "distance": 180,
+            "magsize": 1,
+            "rechard": 20
+        }
+    },
+    "layers": [
+        {
+            "layer_type": "background",
+            "type": "bg_sun",
+            "posY": 690,
+            "speed": 0.30
+        },
+        {
+            "layer_type": "background",
+            "type": "bg_city_back",
+            "posY": 400,
+            "speed": 0.35
+        },
+        {
+            "layer_type": "background",
+            "type": "bg_city_middle",
+            "posY": 340,
+            "speed": 0.40
+        },
+        {
+            "layer_type": "background",
+            "type": "bg_city_front",
+            "posY": 275,
+            "speed": 0.45
+        },
+        {
+            "layer_type": "background",
+            "type": "bg_trees",
+            "posY": 234,
+            "speed": 0.65
+        },
+        /*
+        {
+            "layer_type": "element",
+            "type": "tree",
+            "outfit": 1,
+            "positions": [50, 100, 130, 200, 245, 350, 400, 460, 480, 500, 540, 600, 630, 650, 670, 730, 770, 800, 820, 860, 880, 900, 920, 960, 980],
+            "posY": 50
+        },
+        */
+        {
+            "layer_type": "element",
+            "type": "house",
+            "outfit": 1,
+            "positions": [50, 320, 510, 740, 950, 1200, 1380, 1450, 1600],
+            "posY": 265,
+            "speed": 0.7
+        },
+        /*
+        {
+            "layer_type": "element",
+            "type": "house",
+            "outfit": 2,
+            "positions": [70, 120, 150, 180, 225, 370, 420, 470, 510, 550, 570, 610, 615, 690, 750, 790, 840, 870, 890, 910, 940, 970],
+            "posY": 60
+        },
+        */
+        {
+            "layer_type": "background",
+            "type": "bg_street",
+            "posY": 125,
+            "speed": 0.85
+        },
+        {
+            "layer_type": "background",
+            "type": "bg_ground",
+            "posY": 81,
+            "speed": 0.86
+        }
+    ]
+};
