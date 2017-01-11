@@ -29,7 +29,7 @@ this.kz = this.kz || {};
         //|| kz.sounds.main_sound.playState !== createjs.Sound.PLAY_SUCCEEDED
 
         if (!kz.sounds.main_sound) {
-            kz.sounds.main_sound = createjs.Sound.play('main_sound');
+            kz.sounds.main_sound = createjs.Sound.play('main_sound'. {loop:1});
         }
 
         kz.scenes.main = new kz.Scene({
@@ -225,7 +225,19 @@ this.kz = this.kz || {};
                     func: kz.scn_main,
                     posX: 40,
                     posY: 75
-                }
+                },
+                {
+                    image: 'btn_play',
+                    type: 'mousedown',
+                    func: function () {
+                        kz.stage.removeChild(kz.scenes.game_over);
+                        kz.stage.removeChild(kz.scenes.game);
+                        kz.scn_game();
+                        console.log('RESTART');
+                    },
+                    posX: 20,
+                    posY: 45
+                },
             ],
             removeScenes: [
                 kz.scenes.game,
@@ -284,6 +296,7 @@ this.kz = this.kz || {};
         
         if (kz.config.level_current> 2) {
             kz.scn_game_win();
+            return;
         }
 
         kz.scenes.mnu_level_complete = new kz.Scene({
