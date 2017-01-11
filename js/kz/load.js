@@ -3,26 +3,46 @@ this.kz = this.kz || {};
 
 // Load Game ===================================================================
 kz.load = function () {
-	kz.queue = new createjs.LoadQueue(false);
-	//kz.queue.setPreferXHR = false;
+    createjs.Sound.alternateExtensions = ["mp3"]; // now if ogg is not supported, SoundJS will try asset0.mp3
+    //createjs.Sound.on("fileload", handleSoundLoad); // call handleLoad when each sound loads
+    //createjs.Sound.on("complete", handleSoundsLoad); // call handleLoad when each sound loads
+    //createjs.Sound.registerSounds(sounds, "assets/audio/");
+
+    kz.queue = new createjs.LoadQueue(true);
+    //kz.queue.setPreferXHR = false;
     //kz.queue = new createjs.LoadQueue(true, assetsPath); //var assetsPath = "assets/";
-	kz.queue.installPlugin(createjs.Sound);
-	kz.queue.on("complete", handleComplete, this);
+    kz.queue.installPlugin(createjs.Sound);
+    kz.queue.on("complete", handleComplete, this);
     kz.queue.on("progress", updateLoading);
     kz.queue.on("fileload", handleFileLoaded);
     kz.queue.on("error", handleError);
     
+    
+    
+    var messageField = new createjs.Text("Loading", "bold 24px Arial", "#000000");
+	messageField.maxWidth = 1000;
+	messageField.textAlign = "center";
+	messageField.textBaseline = "middle";
+	messageField.x = kz.stage.canvas.width / 2;
+	messageField.y = kz.stage.canvas.height / 2;
+	kz.stage.addChild(messageField);
+	kz.stage.update(); 	//update the stage to show text
+    
+    
+
     function handleFileLoaded(event) {
         var item = event.item;
         //window.alert('Loaded: '+item.id);
     }
-    
+
     function handleError(event) {
         var item = event.data;
         //window.alert(item.id);
     }
 
     function updateLoading(event) {
+        messageField.text = "Loading " + (kz.queue.progress * 100 | 0) + "%";
+        kz.stage.update();
         //window.alert(kz.queue.progress);
         console.log(kz.queue.progress);
 
@@ -31,10 +51,11 @@ kz.load = function () {
 		stage.update();
         */
 	}
-    
-    
+
     var manifest = [
         {"src":"assets/bg_main.jpg", "id":"bg_main_menu"},
+        {"src":"assets/bg_win.jpg", "id":"bg_win"},
+        {"src":"assets/bg_over.jpg", "id":"bg_over"},
 		{"src":"assets/bg_pause.jpg", "id":"bg_pause_menu"},
 		{"src":"assets/btn_play.jpg", "id":"btn_play"},
 		{"src":"assets/btn_options.jpg", "id":"btn_options"},
@@ -64,17 +85,64 @@ kz.load = function () {
 		{"src":"assets/bg_city_front.png", "id":"bg_city_front"},
 		{"src":"assets/bg_city_middle.png", "id":"bg_city_middle"},
 		{"src":"assets/bg_city_back.png", "id":"bg_city_back"},
-		{"src":"assets/bg_sun.png", "id":"bg_sun"},
+		{"src":"assets/bg_sun.png", "id":"bg_sun"}
+    ];
+
+    /*
+    ,
+        {"src":"assets/audio/enter-menu.ogg", "id":"main_sound"},
+		{"src":"assets/audio/jenison.ogg", "id":"level_sound"},
+		{"src":"assets/audio/shotgun.ogg", "id":"player_shotgun"}
+    */
+    /*
+    var sounds = [
+        {
+            "id":"main_sound",
+            "src": {
+                "mp3": "enter-menu.mp3",
+                "ogg": "enter-menu.ogg"
+            }
+        },
+        {
+            "id":"level_sound",
+            "src": {
+                "mp3": "jenison.mp3",
+                "ogg": "jenison.ogg"
+            }
+        },
+		{
+            "id":"player_shotgun",
+            "src": {
+                "mp3": "shotgun.mp3",
+                "ogg": "shotgun.ogg"
+            }
+        }
+    ];
+    */
+ 
+    //createjs.Sound.addEventListener("fileload", createjs.proxy(handleSoundsLoad, this));
+    //createjs.Sound.registerSounds(sounds, "assets/audio/");
+
+    function handleSoundLoad(event) {
+        console.log(event);
+    }
+
+    function handleSoundsLoad(event) {
+        console.log("all loadeds");
+    }
+    /*
+        ,
 		{"src":"assets/audio/enter-menu.mp3", "id":"main_sound"},
 		{"src":"assets/audio/jenison.mp3", "id":"level_sound"},
 		{"src":"assets/audio/shotgun.mp3", "id":"player_shotgun"}
-    ];
-
+    */
 	//kz.queue.loadFile({id: 'assets', src: 'js/assets.json'});
     //kz.queue.loadManifest("path/to/manifest.json");
     //kz.queue.loadManifest("js/manifest.json");
+
     kz.queue.loadManifest(manifest);
-    kz.queue.loadFile({id: "config", src: "js/config.js"});
+    //kz.queue.loadFile({id: "config", src: "js/config.js"});
+
     /*
     kz.queue.on("complete", function () {
         console.log("scn_game");
@@ -84,7 +152,15 @@ kz.load = function () {
     //kz.queue.loadManifest('assets/manifest.json');
 
     function handleComplete(event) {
+        var width = screen.height,
+            height = screen.width,
+            screenRatio,
+            realWidth,
+            realHeight;
+
         event.remove();
+
+        kz.stage.removeChild(messageField);
 
         kz.queue.on("complete", kz.scn_game, this);
         //kz.queue.off("complete", handleComplete);
@@ -94,8 +170,35 @@ kz.load = function () {
 		document.body.appendChild(image);
 		*/
 
-		kz.SCREENHEIGHT = kz.stage.canvas.height;
-		kz.SCREENWIDTH  = kz.stage.canvas.width;
+        if (width > height) {
+            realWidth = width;
+            realHeight = height;
+            screenRatio = height / width;
+        }
+        else {
+            realWidth = height;
+            realHeight = width;
+            screenRatio = width / height;
+        }
+
+        if (isNaN(screenRatio)) {
+
+            if (window.innerHeight > window.innerWidth) {
+                realWidth = window.innerHeight;
+                realHeight = window.innerWidth;
+                screenRatio = window.innerWidth / window.innerHeight;
+            }
+            else{ 
+                realWidth = window.innerWidth;
+                realHeight = window.innerHeight;
+                screenRatio = window.innerHeight / window.innerWidth;
+            }
+        }
+
+		//kz.SCREENHEIGHT = kz.stage.canvas.height;
+		//kz.SCREENWIDTH  = kz.stage.canvas.width;
+        kz.SCREENHEIGHT = realHeight;
+		kz.SCREENWIDTH  = realWidth;
 
         //kz.config = kz.queue.getResult('config');
         /*
@@ -105,7 +208,7 @@ kz.load = function () {
             kz.scn_main();
         }); 
         */
-        /*
+
         kz.config = {
             "characters": ["player", "spider"],
             "weapons": {
@@ -119,7 +222,6 @@ kz.load = function () {
             "level_current": 1,
             "level_previous": 0
         };
-        */
 
 		kz.scn_main();
 	}
