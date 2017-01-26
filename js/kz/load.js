@@ -8,7 +8,7 @@ kz.load = function () {
     //createjs.Sound.on("complete", handleSoundsLoad); // call handleLoad when each sound loads
     //createjs.Sound.registerSounds(sounds, "assets/audio/");
 
-    kz.queue = new createjs.LoadQueue(true);
+    kz.queue = new createjs.LoadQueue();
     //kz.queue.setPreferXHR = false;
     //kz.queue = new createjs.LoadQueue(true, assetsPath); //var assetsPath = "assets/";
     kz.queue.installPlugin(createjs.Sound);
@@ -45,11 +45,6 @@ kz.load = function () {
         kz.stage.update();
         //window.alert(kz.queue.progress);
         console.log(kz.queue.progress);
-
-		/*
-        messageField.text = "Loading " + (preload.progress * 100 | 0) + "%";
-		stage.update();
-        */
 	}
 
     var manifest = [
@@ -69,9 +64,9 @@ kz.load = function () {
 		{"src":"assets/btn_pause.png", "id":"btn_pause"},
 		{"src":"assets/btn_move.png", "id":"btn_move"},
 		{"src":"assets/btn_shoot.png", "id":"btn_shoot"},
-		{"src":"assets/player/player_tex.png", "id":"player_tex"},
-		{"src":"assets/player/player_tex.js", "id":"player_tex_data"},
-		{"src":"assets/player/player_ske.js", "id":"player_ske_data"},
+		{"src":"assets/characters/character1_tex.png", "id":"character1_tex"},
+		{"src":"assets/characters/character1_tex.json", "id":"character1_tex_data"},
+		{"src":"assets/characters/character1_ske.json", "id":"character1_ske_data"},
 		{"src":"assets/zoombie/zoombie_tex.png", "id":"zoombie_tex"},
 		{"src":"assets/zoombie/zoombie_tex.js", "id":"zoombie_tex_data"},
 		{"src":"assets/zoombie/zoombie_ske.js", "id":"zoombie_ske_data"},
@@ -138,10 +133,10 @@ kz.load = function () {
     */
 	//kz.queue.loadFile({id: 'assets', src: 'js/assets.json'});
     //kz.queue.loadManifest("path/to/manifest.json");
-    //kz.queue.loadManifest("js/manifest.json");
+    kz.queue.loadManifest("js/manifest.json");
 
-    kz.queue.loadManifest(manifest);
-    //kz.queue.loadFile({id: "config", src: "js/config.js"});
+    //kz.queue.loadManifest(manifest);
+    kz.queue.loadFile({id: "config", src: "js/config.json"});
 
     /*
     kz.queue.on("complete", function () {
@@ -152,11 +147,13 @@ kz.load = function () {
     //kz.queue.loadManifest('assets/manifest.json');
 
     function handleComplete(event) {
+        /*
         var width = screen.height,
             height = screen.width,
             screenRatio,
             realWidth,
             realHeight;
+        */
 
         event.remove();
 
@@ -170,6 +167,7 @@ kz.load = function () {
 		document.body.appendChild(image);
 		*/
 
+        /*
         if (width > height) {
             realWidth = width;
             realHeight = height;
@@ -194,13 +192,14 @@ kz.load = function () {
                 screenRatio = window.innerHeight / window.innerWidth;
             }
         }
+        */
 
-		//kz.SCREENHEIGHT = kz.stage.canvas.height;
-		//kz.SCREENWIDTH  = kz.stage.canvas.width;
-        kz.SCREENHEIGHT = realHeight;
-		kz.SCREENWIDTH  = realWidth;
+		kz.SCREENHEIGHT = kz.stage.canvas.height;
+		kz.SCREENWIDTH  = kz.stage.canvas.width;
+        //kz.SCREENHEIGHT = realHeight;
+		//kz.SCREENWIDTH  = realWidth;
 
-        //kz.config = kz.queue.getResult('config');
+        kz.config = kz.queue.getResult('config');
         /*
         $.getJSON("js/config.json", function(data){
             console.log(data);
@@ -208,7 +207,7 @@ kz.load = function () {
             kz.scn_main();
         }); 
         */
-
+/*
         kz.config = {
             "characters": ["player", "spider"],
             "weapons": {
@@ -222,7 +221,7 @@ kz.load = function () {
             "level_current": 1,
             "level_previous": 0
         };
-
+*/
 		kz.scn_main();
 	}
 }
