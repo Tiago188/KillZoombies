@@ -29,7 +29,7 @@ this.kz = this.kz || {};
         //|| kz.sounds.main_sound.playState !== createjs.Sound.PLAY_SUCCEEDED
 
         if (!kz.sounds.main_sound) {
-            kz.sounds.main_sound = createjs.Sound.play('main_sound'. {loop:1});
+            //#kz.sounds.main_sound = createjs.Sound.play('main_sound', {loop:1});
         }
 
         kz.scenes.main = new kz.Scene({
@@ -384,6 +384,7 @@ this.kz = this.kz || {};
     }
 
     // HUD =========================================================================
+    //GIT ADD time to move player
     kz.addHUD = function () {
     	console.log("PAUSE MENU");
         kz.game_hud = new kz.HUD({
@@ -408,23 +409,21 @@ this.kz = this.kz || {};
                         {
                             type: 'mousedown',
                             func: function () {
-                        		if ( kz.player.display.life > 0 && kz.player.display.visible && !createjs.Ticker.paused ) {
-                        			kz.player.display.direction = -1;
-                        			kz.player.display.scaleX = -kz.player.scale;
-                                    kz.player.display.mobile = true;
-                                    kz.player.display.status = 'walk';
-                        			kz.player.animation.gotoAndPlay('walk');
-                        		}
+                                if (!createjs.Ticker.paused) {
+                                    kz.lastKey = {time: createjs.Ticker.getTime(), key: 'BUTTONDOWN'};
+                                    kz.player.display.direction = -1;
+                                    //kz.player.display.mobile = true;
+                                    //kz.player.display.move(true);
+                                }
                         	}
                         },
                         {
                             type: 'pressup',
                             func: function () {
                         		if ( kz.player.display.life > 0 && !createjs.Ticker.paused ) {
+                                    kz.lastKey = {time: createjs.Ticker.getTime(), key: 'BUTTONUP'};
                         			//kz.player.display.direction = 0;
-                                    kz.player.display.mobile = false;
-                        			kz.player.display.status = 'idle';
-                        			kz.player.animation.gotoAndPlay('idle');
+                                    kz.player.display.idle();
                         		}
                         	}
                         }
@@ -440,23 +439,21 @@ this.kz = this.kz || {};
                         {
                             type: 'mousedown',
                             func: function () {
-                        		if ( kz.player.display.life > 0 && kz.player.display.visible && !createjs.Ticker.paused ) {
-                        			kz.player.display.direction = 1;
-                        			kz.player.display.scaleX = kz.player.scale;
-                                    kz.player.display.mobile = true;
-                                    kz.player.display.status = 'walk';
-                        			kz.player.animation.gotoAndPlay('walk');
-                        		}
+                                if (!createjs.Ticker.paused) {
+                                    kz.lastKey = {time: createjs.Ticker.getTime(), key: 'BUTTONDOWN'};
+                                    kz.player.display.direction = 1;
+                                    //kz.player.display.mobile = true;
+                                    //kz.player.display.move(true);
+                                }
                         	}
                         },
                         {
                             type: 'pressup',
                             func: function () {
                         		if ( kz.player.display.life > 0 && !createjs.Ticker.paused ) {
+                                    kz.lastKey = {time: createjs.Ticker.getTime(), key: 'BUTTONUP'};
                         			//kz.player.display.direction = 0;
-                                    kz.player.display.mobile = false;
-                                    kz.player.display.status = 'idle';
-                        			kz.player.animation.gotoAndPlay('idle');
+                                    kz.player.display.idle();
                         		}
                     	    }
                         }
