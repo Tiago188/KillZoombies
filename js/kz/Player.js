@@ -20,10 +20,10 @@ this.kz = this.kz || {};
             that;
 
         data.texture = kz.queue.getResult(data.texture);
-        //data.textureData = kz.queue.getResult(data.textureData);
-        data.textureData = kz.bonesAssets.playerTex;
-        //data.skeletonData = kz.queue.getResult(data.skeletonData);
-        data.skeletonData = kz.bonesAssets.playerSke;
+        data.textureData = kz.queue.getResult(data.textureData);
+        //data.textureData = kz.bonesAssets.playerTex;
+        data.skeletonData = kz.queue.getResult(data.skeletonData);
+        //data.skeletonData = kz.bonesAssets.playerSke;
 
         this.CreatejsFactory_constructor();
 
@@ -43,7 +43,13 @@ this.kz = this.kz || {};
         this.display.status = 'idle';
         armature.animation.play();
 
-        armature.scale = 0.25;
+        this.display.addEventListener(dragonBones.AnimationEvent.LOOP_COMPLETE, function(){
+            // a block of code that is not executed
+            console.log('COMPLETE');
+        });
+
+        //armature.scale = 0.25;
+        armature.scale = 0.65;
         this.display.ax = 60;
     	this.display.x = this.display.ax;
         this.display.regX = this.display.getBounds().width/2;
@@ -86,18 +92,29 @@ this.kz = this.kz || {};
             i = 0;
 
             for (i; i < bones.length; i++) {
-                armature.getSlot(bones[i]).setDisplay(armature.factory.getTextureDisplay(bones[i]+'_'+outfit));
+                //armature.getSlot(bones[i]).setDisplay(armature.factory.getTextureDisplay(bones[i]+'_'+outfit));
             }
         };
 
-        this.display.move = function (delta, moveX, moveAx) {
+        this.display.idle = function () {
+            if (this.status !== 'idle') {
+                console.log(2)
+                this.status = 'idle';
+                this.mobile = false;
+                armature.animation.gotoAndPlay('idle');
+            }
+        };
+
+        this.display.move = function (moveX, moveAx) {
             if (this.visible == true) {
+                console.log(10);
+
                 if (!moveAx) {
-                    this.x += delta * this.speed * this.direction;
+                    this.x += createjs.Ticker.delta * this.speed * this.direction;
                 }
 
                 if (!moveX) {
-                    this.ax += delta * this.speed * this.direction;
+                    this.ax += createjs.Ticker.delta * this.speed * this.direction;
                     that.mobile = true;
                 }
             } else {
@@ -124,10 +141,21 @@ this.kz = this.kz || {};
 
                 if (that.life > 0) {
         			//if ( that.direction !== 0 ) {
+                    if (kz.lastKey.key === 'BUTTONDOWN' && (createjs.Ticker.getTime() - kz.lastKey.time) > 200) {
+                        that.mobile = true;
+
+                        if (that.status !== 'walk') {
+                            that.status = 'walk';
+                            //that.display.direction = 1;
+                            that.scaleX = that.direction !== 0 ? that.direction * armature.scale : that.scale;
+                            armature.animation.gotoAndPlay('walk');
+                        }
+                    }
+
                     if (that.mobile) {
                         if ( that.ax >= 0 && ( that.ax <= kz.level.distance - 50 ) ) {
                             //that.ax += event.delta * that.speed * that.direction;
-                            that.move(event.delta, false, true);
+                            that.move(false, true);
                         }
 
                         if ( that.ax < 0 ) {
@@ -141,7 +169,7 @@ this.kz = this.kz || {};
 
                         if ( that.mobile && ( that.ax < ( kz.stage.canvas.width/2 - 50 ) || that.ax > ( kz.level.distance - kz.stage.canvas.width/2 - 50 ) ) ) {
                             //that.x += event.delta * that.speed * that.direction;
-                            that.move(event.delta, true);
+                            that.move(true);
                         }
         			}
                 } else if (that.status !== 'death') {
@@ -149,7 +177,7 @@ this.kz = this.kz || {};
                     //createjs.Sound.play("death", {interrupt: createjs.Sound.INTERRUPT_ANY});
                     that.status = 'death';
                     that.mobile = false;
-                    kz.mnu_game_over();
+                    kz.scn_game_over();
                 }
 
                 if (that.status === 'shoot') {
